@@ -1,0 +1,34 @@
+{
+  "files": {
+    "main.css": "/e-shop/static/css/main.1ecb83bb.css",
+    "main.js": "/e-shop/static/js/main.e4f77ed1.js",
+    "static/media/banner13.jpg": "/e-shop/static/media/banner13.367f10ffc291aecd70c9.jpg",
+    "static/media/banner03.jpg": "/e-shop/static/media/banner03.18141b0a9e69c06ffbd7.jpg",
+    "static/media/banner02.jpg": "/e-shop/static/media/banner02.22bcfdca4b5f9f565b2d.jpg",
+    "static/media/banner01.jpg": "/e-shop/static/media/banner01.3074570bda1c8c37aa56.jpg",
+    "static/media/banner10.jpg": "/e-shop/static/media/banner10.d833f2d641baf9779497.jpg",
+    "static/media/main-product04.jpg": "/e-shop/static/media/main-product04.2cec4c0f3c20f2adcc1c.jpg",
+    "static/media/banner11.jpg": "/e-shop/static/media/banner11.ee7731dac8808be742a7.jpg",
+    "static/media/main-product03.jpg": "/e-shop/static/media/main-product03.aa148f3488e60f73e827.jpg",
+    "static/media/main-product02.jpg": "/e-shop/static/media/main-product02.8e9deb41e33b7285307b.jpg",
+    "static/media/main-product01.jpg": "/e-shop/static/media/main-product01.4a20994187bfa9b4633d.jpg",
+    "static/media/banner12.jpg": "/e-shop/static/media/banner12.dcc5e0e9c6c30b01dc50.jpg",
+    "static/media/banner05.jpg": "/e-shop/static/media/banner05.54e12915c8f9ee7920a7.jpg",
+    "static/media/banner15.jpg": "/e-shop/static/media/banner15.55e49e0f1fe2ed598c43.jpg",
+    "static/media/banner14.jpg": "/e-shop/static/media/banner14.5e5a734222ed43374c8a.jpg",
+    "static/media/banner04.jpg": "/e-shop/static/media/banner04.98b5b544d1d5e3228594.jpg",
+    "static/media/banner08.jpg": "/e-shop/static/media/banner08.2d709a133db52ecb4ed9.jpg",
+    "static/media/banner06.jpg": "/e-shop/static/media/banner06.f7e346f073267afe7a15.jpg",
+    "static/media/banner07.jpg": "/e-shop/static/media/banner07.15d43ad1af0dbff4ee7d.jpg",
+    "static/media/banner09.jpg": "/e-shop/static/media/banner09.5ce1b6e102e3b78a35f0.jpg",
+    "static/media/product06.jpg": "/e-shop/static/media/product06.19a3ead05ed2b5f9826d.jpg",
+    "static/media/product08.jpg": "/e-shop/static/media/product08.81434dc8806a43343c17.jpg",
+    "index.html": "/e-shop/index.html",
+    "main.1ecb83bb.css.map": "/e-shop/static/css/main.1ecb83bb.css.map",
+    "main.e4f77ed1.js.map": "/e-shop/static/js/main.e4f77ed1.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1ecb83bb.css",
+    "static/js/main.e4f77ed1.js"
+  ]
+}
