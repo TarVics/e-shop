@@ -1,0 +1,25 @@
+.wrapper {
+    padding: 50px;
+    /*width: var(--wrapper-width);*/
+    height: 50vh;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    padding: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 6px 6px -6px rgba(0, 0, 0, 0.175);
+    background-color: #FFF;
+    /*background-color: #f5f6f7;*/
+    border: 1px solid #DADADA;
+}
+
+.title {
+    color: #f7694a;
+    margin: 0;
+}

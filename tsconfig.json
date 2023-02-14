@@ -6,6 +6,10 @@
       "dom.iterable",
       "esnext"
     ],
+    "types": [
+      "jquery",
+      "bootstrap"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
