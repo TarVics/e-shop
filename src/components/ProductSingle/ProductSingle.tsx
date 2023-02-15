@@ -10,6 +10,7 @@ import {ProductQuick} from "../ProductQuick";
 
 const ProductSingle: FC<ProductType> = (props) => {
     const [visibleModal, toggleModal] = useToggle();
+    const {i18n} = useAppSelector(state => state.i18nReducer);
     const {activeCurrency} = useAppSelector(state => state.refsReducer);
     const [stopTimer, setStopTimer] = useState({days: "00", hours: "00", minutes: "00"});
 
@@ -50,7 +51,7 @@ const ProductSingle: FC<ProductType> = (props) => {
             <div className={props.isHot ? "product product-single product-hot" : "product product-single"}>
                 <div className="product-thumb">
                     <div className="product-label">
-                        {props.isNew ? <span>New</span> : null}
+                        {props.isNew ? <span>{i18n.value.NEW}</span> : null}
                         {props.sale ? <span className="sale">-{props.sale}%</span> : null}
                     </div>
                     {props.saleStop ?
@@ -61,13 +62,13 @@ const ProductSingle: FC<ProductType> = (props) => {
                         </ul> : null
                     }
                     <button className="main-btn quick-view" onClick={toggleModal}>
-                        <i className="fa fa-search-plus"></i> Quick view
+                        <i className="fa fa-search-plus"></i> {i18n.value.QUICK_VIEW}
                     </button>
                     <Modal
                         visible={visibleModal}
                         title={props.name}
                         content={<ProductQuick/>}
-                        footer={<button className="primary-btn" onClick={toggleModal}>Гаразд</button>}
+                        footer={<button className="primary-btn" onClick={toggleModal}>{i18n.value.OK}</button>}
                         onClose={toggleModal}
                     />
                     <img src={props.image.column} alt=""/>
@@ -94,7 +95,7 @@ const ProductSingle: FC<ProductType> = (props) => {
                             <i className="fa fa-exchange"></i>
                         </button>
                         <button className="primary-btn add-to-cart">
-                            <i className="fa fa-shopping-cart"></i> Add to Cart
+                            <i className="fa fa-shopping-cart"></i> {i18n.value.ADD_TO_CART}
                         </button>
                     </div>
                 </div>

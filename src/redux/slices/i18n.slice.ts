@@ -12,7 +12,7 @@ const initialFunc = () => {
     if (Object.keys(i18nData).includes(language)) {
         return i18nData[language as I18nLanguage];
     } else {
-        const result = i18nData["ukrainian"];
+        const result = i18nData["english"];
         localStorage.setItem('language', result.name);
         return result;
     }

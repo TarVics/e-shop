@@ -2,8 +2,10 @@ import React, {useEffect} from 'react';
 import {Link} from "react-router-dom";
 
 import imagesData from "../../data/db/images.data";
+import {useAppSelector} from "../../hooks";
 
 const ProductQuick = () => {
+    const {i18n} = useAppSelector(state => state.i18nReducer);
 
     useEffect(() => {
         const {$} = window as any;
@@ -75,7 +77,7 @@ const ProductQuick = () => {
                             <div className="col-md-6">
                                 <div className="product-body">
                                     <div className="product-label">
-                                        <span>New</span>
+                                        <span>{i18n.value.NEW}</span>
                                         <span className="sale">-20%</span>
                                     </div>
                                     <h2 className="product-name">Product Name Goes Here</h2>
@@ -88,21 +90,21 @@ const ProductQuick = () => {
                                             <i className="fa fa-star"></i>
                                             <i className="fa fa-star-o empty"></i>
                                         </div>
-                                        <a href=".">3 Review(s) / Add Review</a>
+                                        <a href=".">3 {i18n.value.REVIEWS_N} / {i18n.value.ADD_REVIEW}</a>
                                     </div>
-                                    <p><strong>Availability:</strong> In Stock</p>
-                                    <p><strong>Brand:</strong> E-SHOP</p>
+                                    <p><strong>{i18n.value.AVAILABLE}:</strong> {i18n.value.IN_STOCK}</p>
+                                    <p><strong>{i18n.value.BRAND}:</strong> E-SHOP</p>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
                                         dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                                     <div className="product-options">
                                         <ul className="size-option">
-                                            <li><span className="text-uppercase">Size:</span></li>
+                                            <li><span className="text-uppercase">{i18n.value.SIZE}:</span></li>
                                             <li className="active"><a href=".">S</a></li>
                                             <li><a href=".">XL</a></li>
                                             <li><a href=".">SL</a></li>
                                         </ul>
                                         <ul className="color-option">
-                                            <li><span className="text-uppercase">Color:</span></li>
+                                            <li><span className="text-uppercase">{i18n.value.COLOR}:</span></li>
                                             <li className="active"><Link to="." style={{backgroundColor: "#475984"}}></Link></li>
                                             <li><Link to="." style={{backgroundColor: "#8A2454"}}></Link></li>
                                             <li><Link to="." style={{backgroundColor: "#BF6989"}}></Link></li>
@@ -112,10 +114,10 @@ const ProductQuick = () => {
 
                                     <div className="product-btns">
                                         <div className="qty-input">
-                                            <span className="text-uppercase">QTY: </span>
+                                            <span className="text-uppercase">{i18n.value.QTY}: </span>
                                             <input className="input" type="number"/>
                                         </div>
-                                        <button className="primary-btn add-to-cart"><i className="fa fa-shopping-cart"></i> Add to Cart</button>
+                                        <button className="primary-btn add-to-cart"><i className="fa fa-shopping-cart"></i> {i18n.value.ADD_TO_CART}</button>
                                         <div className="pull-right">
                                             <button className="main-btn icon-btn"><i className="fa fa-heart"></i></button>
                                             <button className="main-btn icon-btn"><i className="fa fa-exchange"></i></button>

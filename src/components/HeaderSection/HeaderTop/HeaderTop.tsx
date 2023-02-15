@@ -25,12 +25,12 @@ const HeaderTop = () => {
             <div id="top-header">
                 <div className="container">
                     <div className="pull-left">
-                        <span>Welcome to E-shop!</span>
+                        <span>{i18n.value.WELCOME}</span>
                     </div>
                     <div className="pull-right">
                         <ul className="header-top-links">
-                            <li><a href=".">Store</a></li>
-                            <li><a href=".">Newsletter</a></li>
+                            <li><a href=".">{i18n.value.STORE}</a></li>
+                            <li><a href=".">{i18n.value.NEWSLETTER}</a></li>
                             <li><a href=".">FAQ</a></li>
                             <li className="dropdown default-dropdown">
                                 <div className="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">{i18n.short} <i

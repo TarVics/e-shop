@@ -3,8 +3,10 @@ import {Link} from "react-router-dom";
 
 import {PickedProducts} from "../../components";
 import imagesData from "../../data/db/images.data";
+import {useAppSelector} from "../../hooks";
 
 const DetailsPage = () => {
+    const {i18n} = useAppSelector(state => state.i18nReducer);
 
     useEffect(() => {
         const {$} = window as any;
@@ -87,7 +89,7 @@ const DetailsPage = () => {
                             <div className="col-md-6">
                                 <div className="product-body">
                                     <div className="product-label">
-                                        <span>New</span>
+                                        <span>{i18n.value.NEW}</span>
                                         <span className="sale">-20%</span>
                                     </div>
                                     <h2 className="product-name">Product Name Goes Here</h2>
@@ -100,21 +102,21 @@ const DetailsPage = () => {
                                             <i className="fa fa-star"></i>
                                             <i className="fa fa-star-o empty"></i>
                                         </div>
-                                        <a href=".">3 Review(s) / Add Review</a>
+                                        <a href=".">3 {i18n.value.REVIEWS_N} / {i18n.value.ADD_REVIEW}</a>
                                     </div>
-                                    <p><strong>Availability:</strong> In Stock</p>
-                                    <p><strong>Brand:</strong> E-SHOP</p>
+                                    <p><strong>{i18n.value.AVAILABLE}:</strong> {i18n.value.IN_STOCK}</p>
+                                    <p><strong>{i18n.value.BRAND}:</strong> E-SHOP</p>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
                                         dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                                     <div className="product-options">
                                         <ul className="size-option">
-                                            <li><span className="text-uppercase">Size:</span></li>
+                                            <li><span className="text-uppercase">{i18n.value.SIZE}:</span></li>
                                             <li className="active"><a href=".">S</a></li>
                                             <li><a href=".">XL</a></li>
                                             <li><a href=".">SL</a></li>
                                         </ul>
                                         <ul className="color-option">
-                                            <li><span className="text-uppercase">Color:</span></li>
+                                            <li><span className="text-uppercase">{i18n.value.COLOR}:</span></li>
                                             <li className="active"><Link to="." style={{backgroundColor: "#475984"}}></Link></li>
                                             <li><Link to="." style={{backgroundColor: "#8A2454"}}></Link></li>
                                             <li><Link to="." style={{backgroundColor: "#BF6989"}}></Link></li>
@@ -124,10 +126,10 @@ const DetailsPage = () => {
 
                                     <div className="product-btns">
                                         <div className="qty-input">
-                                            <span className="text-uppercase">QTY: </span>
+                                            <span className="text-uppercase">{i18n.value.QTY}: </span>
                                             <input className="input" type="number"/>
                                         </div>
-                                        <button className="primary-btn add-to-cart"><i className="fa fa-shopping-cart"></i> Add to Cart</button>
+                                        <button className="primary-btn add-to-cart"><i className="fa fa-shopping-cart"></i> {i18n.value.ADD_TO_CART}</button>
                                         <div className="pull-right">
                                             <button className="main-btn icon-btn"><i className="fa fa-heart"></i></button>
                                             <button className="main-btn icon-btn"><i className="fa fa-exchange"></i></button>
@@ -139,9 +141,9 @@ const DetailsPage = () => {
                             <div className="col-md-12">
                                 <div className="product-tab">
                                     <ul className="tab-nav">
-                                        <li className="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-                                        <li><a data-toggle="tab" href="#tab1">Details</a></li>
-                                        <li><a data-toggle="tab" href="#tab2">Reviews (3)</a></li>
+                                        <li className="active"><a data-toggle="tab" href="#tab1">{i18n.value.DESCRIPTION}</a></li>
+                                        <li><a data-toggle="tab" href="#tab1">{i18n.value.DETAILS}</a></li>
+                                        <li><a data-toggle="tab" href="#tab2">{i18n.value.REVIEWS} (3)</a></li>
                                     </ul>
                                     <div className="tab-content">
                                         <div id="tab1" className="tab-pane fade in active">
@@ -216,21 +218,21 @@ const DetailsPage = () => {
                                                     </div>
                                                 </div>
                                                 <div className="col-md-6">
-                                                    <h4 className="text-uppercase">Write Your Review</h4>
-                                                    <p>Your email address will not be published.</p>
+                                                    <h4 className="text-uppercase">{i18n.value.WRITE_YOUR_REVIEW}</h4>
+                                                    <p>{i18n.value.EMAIL_NOT_PUBLISHED}</p>
                                                     <form className="review-form">
                                                         <div className="form-group">
-                                                            <input className="input" type="text" placeholder="Your Name" />
+                                                            <input className="input" type="text" placeholder={i18n.value.YOUR_NAME} />
                                                         </div>
                                                         <div className="form-group">
-                                                            <input className="input" type="email" placeholder="Email Address" />
+                                                            <input className="input" type="email" placeholder={i18n.value.EMAIL_ADDRESS} />
                                                         </div>
                                                         <div className="form-group">
-                                                            <textarea className="input" placeholder="Your review"></textarea>
+                                                            <textarea className="input" placeholder={i18n.value.YOUR_REVIEW}></textarea>
                                                         </div>
                                                         <div className="form-group">
                                                             <div className="input-rating">
-                                                                <strong className="text-uppercase">Your Rating: </strong>
+                                                                <strong className="text-uppercase">{i18n.value.YOUR_RATING}: </strong>
                                                                 <div className="stars">
                                                                     <input type="radio" id="star5" name="rating" value="5"/><label htmlFor="star5"></label>
                                                                     <input type="radio" id="star4" name="rating" value="4"/><label htmlFor="star4"></label>
@@ -240,7 +242,7 @@ const DetailsPage = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <button className="primary-btn">Submit</button>
+                                                        <button className="primary-btn">{i18n.value.SUBMIT}</button>
                                                     </form>
                                                 </div>
                                             </div>

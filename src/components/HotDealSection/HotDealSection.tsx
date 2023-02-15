@@ -6,6 +6,8 @@ import {refsService, uriService} from "../../services";
 import {SectionBanner, SectionButton} from "..";
 
 const HotDealSection = () => {
+    const {i18n} = useAppSelector(state => state.i18nReducer);
+
     const navigate = useNavigate();
     const {hot} = useAppSelector(state => state.summaryReducer);
     const {collections} = useAppSelector(state => state.refsReducer);
@@ -35,7 +37,7 @@ const HotDealSection = () => {
                                             className="white-color font-weak">{largeCollection.description}</span></h1>
                                         <SectionButton onClick={() => {
                                             navigate(uriService.uriProductsByCollectionId(largeCollection.id))
-                                        }}>Shop Now</SectionButton>
+                                        }}>{i18n.value.SHOP_NOW}</SectionButton>
                                     </SectionBanner>
                                     {/* <!-- /banner --> */}
 

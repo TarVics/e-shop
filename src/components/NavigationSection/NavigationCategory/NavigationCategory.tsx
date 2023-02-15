@@ -10,13 +10,14 @@ export interface NavigationCategoryProps {
     onClick: MouseEventHandler<HTMLElement>;
 }
 const NavigationCategory: FC<NavigationCategoryProps> = ({active, onClick}) => {
+    const {i18n} = useAppSelector(state => state.i18nReducer);
     const location = useLocation();
     const {categories} = useAppSelector(state => state.refsReducer);
     return (
         <>
             {/* <!-- category nav --> */}
             <div className={"category-nav" + (location.pathname === uriService.uriHome() ? "" : " show-on-click")}>
-                <span className="category-header" onClick={onClick}>Categories <i className="fa fa-list"></i></span>
+                <span className="category-header" onClick={onClick}>{i18n.value.CATEGORIES} <i className="fa fa-list"></i></span>
                 <ul className={"category-list" + (active ? " open" : "")}>
                     {refsService.getCategoryTree(categories).map(category =>
                         category.children.length ?
@@ -30,7 +31,7 @@ const NavigationCategory: FC<NavigationCategoryProps> = ({active, onClick}) => {
                                 <Link to={uriService.uriProductsByCategoryId(category.id)}>{category.name}</Link>
                             </li>
                     )}
-                    <li><a href={uriService.uriProductsByCategoryId('')}>View All</a></li>
+                    <li><a href={uriService.uriProductsByCategoryId('')}>{i18n.value.VIEW_ALL}</a></li>
                 </ul>
             </div>
             {/* <!-- /category nav --> */}

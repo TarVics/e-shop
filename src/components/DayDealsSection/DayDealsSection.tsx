@@ -6,6 +6,7 @@ import {useAppSelector} from "../../hooks";
 import {refsService, uriService} from "../../services";
 
 const DayDealsSection = () => {
+    const {i18n} = useAppSelector(state => state.i18nReducer);
     const navigate = useNavigate();
     const {deals} = useAppSelector(state => state.summaryReducer);
     const {collections} = useAppSelector(state => state.refsReducer);
@@ -92,7 +93,7 @@ const DayDealsSection = () => {
                     {/* <!-- row --> */}
                     <div className="row">
                         <div className="col-md-12">
-                            <SectionTitle caption={'Deals Of The Day'} slickClass={'product-slick-dots-1'}/>
+                            <SectionTitle caption={i18n.value.DEALS_OF_DAY} slickClass={'product-slick-dots-1'}/>
                         </div>
 
                         <div className="col-md-3 col-sm-6 col-xs-6">
@@ -103,7 +104,7 @@ const DayDealsSection = () => {
                                         <h2 className="white-color">{dealsCollection.name}</h2>
                                         <SectionButton onClick={() => {
                                             navigate(uriService.uriProductsByCollectionId(dealsCollection?.id))
-                                        }}>Shop Now</SectionButton>
+                                        }}>{i18n.value.SHOP_NOW}</SectionButton>
                                     </SectionBanner>
                                     {/* <!-- /banner --> */}
                                 </> : null
@@ -126,7 +127,7 @@ const DayDealsSection = () => {
                     {/* <!-- row --> */}
                     <div className="row">
                         <div className="col-md-12">
-                            <SectionTitle caption={'Deals Of The Day'} slickClass={'product-slick-dots-2'}/>
+                            <SectionTitle caption={i18n.value.DEALS_OF_DAY} slickClass={'product-slick-dots-2'}/>
                         </div>
 
                         {/* <!-- Product Single --> */}

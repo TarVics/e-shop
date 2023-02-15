@@ -4,6 +4,7 @@ import {SectionTitle, ProductSingle} from "../..";
 import {useAppSelector} from "../../../hooks";
 
 const PickedProducts = () => {
+    const {i18n} = useAppSelector(state => state.i18nReducer);
     const {picked} = useAppSelector(state => state.summaryReducer);
     return (
         <>
@@ -11,7 +12,7 @@ const PickedProducts = () => {
             {/* <!-- row --> */}
             <div className="row">
                 <div className="col-md-12">
-                    <SectionTitle caption={'Picked For You'}/>
+                    <SectionTitle caption={i18n.value.PICKED_FOR_YOU}/>
                 </div>
 
                 {picked?.map(value =>

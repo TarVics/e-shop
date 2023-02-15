@@ -64,7 +64,7 @@ const HeaderSearch = () => {
                     <input
                         type="text"
                         className="input search-input"
-                        placeholder="Enter your keyword"
+                        placeholder={i18n.value.KEYWORD_PLACEHOLDER}
                         onInput={onInput}
                     />
                     <select className="input search-categories" onChange={onSelect}>

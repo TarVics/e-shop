@@ -71,7 +71,7 @@ const StoreFilter = () => {
                         <a href="." className="active"><i className="fa fa-bars"></i></a>
                     </div>
                     <div className="sort-filter">
-                        <span className="text-uppercase">Sort By:</span>
+                        <span className="text-uppercase">{i18n.value.SORT_BY}:</span>
                         <select className="input" onChange={onSortKindChange} value={params.get('sort') || '0'}>
                             {sortNames.map(item => <option key={item.id} value={item.id}>{item.name[i18n.encode]}</option>)}
                         </select>
@@ -82,12 +82,17 @@ const StoreFilter = () => {
                 </div>
                 <div className="pull-right">
                     <div className="page-filter">
-                        <span className="text-uppercase">Show:</span>
+                        <span className="text-uppercase">{i18n.value.SHOW}:</span>
                         <select className="input" onChange={onPageLimitChange} value={params.get('show') || '0'}>
                             {pageLimits.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}
                         </select>
                     </div>
-                    <Pagination linkCount={3} startPage={Number(params.get("page") || '1')} pageCount={total_pages || 1} onChange={onPageChange}/>
+                    <Pagination caption={i18n.value.PAGE}
+                                linkCount={3}
+                                startPage={Number(params.get("page") || '1')}
+                                pageCount={total_pages || 1}
+                                onChange={onPageChange}
+                    />
                 </div>
             </div>
             {/* <!-- /store top (bottom) filter --> */}

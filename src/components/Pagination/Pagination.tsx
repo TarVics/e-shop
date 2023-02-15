@@ -1,6 +1,7 @@
 import React, {FC, MouseEvent, useEffect, useState} from 'react';
 
 export interface PaginationProps {
+    caption?: string;
     linkCount: number;
     pageCount: number;
     startPage?: number;
@@ -17,7 +18,7 @@ const defaultPageInfo: PageInfoType = {
     page: 0,
 }
 
-const Pagination: FC<PaginationProps> = ({linkCount, pageCount, onChange, startPage}) => {
+const Pagination: FC<PaginationProps> = ({caption, linkCount, pageCount, onChange, startPage}) => {
     const [pageInfo, setPageInfo] = useState<PageInfoType>(defaultPageInfo);
 
     useEffect(() => {
@@ -85,7 +86,7 @@ const Pagination: FC<PaginationProps> = ({linkCount, pageCount, onChange, startP
 
     return (
         <ul className="store-pages">
-            <li><span className="text-uppercase">Page:</span></li>
+            {caption ? <li><span className="text-uppercase">{caption}:</span></li> : null}
             {pageInfo.offset > 0 ?
                 <li>
                     <a href="." onClick={e => onPageClick(e, -1)}><i className="fa fa-caret-left"></i></a>

@@ -7,6 +7,7 @@ import {SectionButton, SectionBanner} from "..";
 
 const HomeSection = () => {
     const navigate = useNavigate();
+    const {i18n} = useAppSelector(state => state.i18nReducer);
     const {home} = useAppSelector(state => state.summaryReducer);
     const {collections} = useAppSelector(state => state.refsReducer);
     const slidesRef = React.useRef(null);
@@ -62,7 +63,7 @@ const HomeSection = () => {
                                         }
                                         <SectionButton onClick={() => {
                                             navigate(uriService.uriProductsByCollectionId(collection.id));
-                                        }}>Shop Now</SectionButton>
+                                        }}>{i18n.value.SHOP_NOW}</SectionButton>
                                     </SectionBanner>
                                 )
                             })}

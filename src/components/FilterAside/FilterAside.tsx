@@ -170,7 +170,7 @@ const FilterAside: FC = () => {
             <div id="aside" className="col-md-3">
                 {/* <!-- aside widget --> */}
                 <div className="aside">
-                    <h3 className="aside-title">Shop by:</h3>
+                    <h3 className="aside-title">{i18n.value.SHOP_BY}:</h3>
 
                     {
                         filterColors.length ?
@@ -239,20 +239,20 @@ const FilterAside: FC = () => {
                             </ul> : null
                     }
 
-                    <button className="primary-btn" onClick={() => clearAll()}>Clear All</button>
+                    <button className="primary-btn" onClick={() => clearAll()}>{i18n.value.CLEAR_ALL}</button>
                 </div>
                 {/* <!-- /aside widget --> */}
 
                 {/* <!-- aside widget --> */}
                 <div className="aside">
-                    <h3 className="aside-title">Filter by Price</h3>
+                    <h3 className="aside-title">{i18n.value.FILTER_BY_PRICE}:</h3>
                     <div id="price-slider" ref={sliderRef}></div>
                 </div>
                 {/* <!-- aside widget --> */}
 
                 {/* <!-- aside widget --> */}
                 <div className="aside">
-                    <h3 className="aside-title">Filter By Color:</h3>
+                    <h3 className="aside-title">{i18n.value.FILTER_BY_COLOR}:</h3>
                     <ul className="color-option">
                         {colors.map(item =>
                             <li key={item.id} className={filterColors.includes(item.id) ? "active" : ""}>
@@ -269,7 +269,7 @@ const FilterAside: FC = () => {
 
                 {/* <!-- aside widget --> */}
                 <div className="aside">
-                    <h3 className="aside-title">Filter By Size:</h3>
+                    <h3 className="aside-title">{i18n.value.FILTER_BY_SIZE}:</h3>
                     <ul className="size-option">
                         {sizes.map(item =>
                             <li key={item.id} className={filterSizes.includes(item.id) ? "active" : ""}>
@@ -282,7 +282,7 @@ const FilterAside: FC = () => {
 
                 {/* <!-- aside widget --> */}
                 <div className="aside">
-                    <h3 className="aside-title">Filter by Brand</h3>
+                    <h3 className="aside-title">{i18n.value.FILTER_BY_BRAND}</h3>
                     <ul className="list-links">
                         {brands.map(item =>
                             <li key={item.id} className={filterBrands.includes(item.id) ? "active" : ""}>
@@ -295,7 +295,7 @@ const FilterAside: FC = () => {
 
                 {/* <!-- aside widget --> */}
                 <div className="aside">
-                    <h3 className="aside-title">Filter by Gender</h3>
+                    <h3 className="aside-title">{i18n.value.FILTER_BY_GENDER}</h3>
                     <ul className="list-links">
                         {genders.map(item =>
                             <li key={item.id} className={filterGenders.includes(item.id) ? "active" : ""}>
@@ -308,7 +308,7 @@ const FilterAside: FC = () => {
 
                 {/* <!-- aside widget --> */}
                 <div className="aside">
-                    <h3 className="aside-title">Top Rated Product</h3>
+                    <h3 className="aside-title">{i18n.value.TOP_RATED_PRODUCTS}</h3>
                     {picked && picked?.length > 0 ? <ProductWidget {...picked[0]}/> : null}
                     {picked && picked?.length > 1 ? <ProductWidget {...picked[1]}/> : null}
                 </div>

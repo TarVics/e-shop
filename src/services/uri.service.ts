@@ -40,7 +40,7 @@ export const uriService = {
         const searchParams = new URLSearchParams();
 
         if (categoryId) searchParams.set("category", categoryId);
-        if (searchText) searchParams.set("search", searchText);
+        if (searchText) searchParams.set("query", searchText);
 
         const uriParams = searchParams.toString();
         console.log(uri + "?" + uriParams);

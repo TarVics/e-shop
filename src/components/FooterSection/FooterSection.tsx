@@ -3,8 +3,10 @@ import {Link} from "react-router-dom";
 
 import imagesData from "../../data/app/images.data";
 import {uriService} from "../../services";
+import {useAppSelector} from "../../hooks";
 
 const FooterSection = () => {
+    const {i18n} = useAppSelector(state => state.i18nReducer);
     return (
         <>
             {/* <!-- FOOTER --> */}
@@ -44,13 +46,13 @@ const FooterSection = () => {
                         {/* <!-- footer widget --> */}
                         <div className="col-md-3 col-sm-6 col-xs-6">
                             <div className="footer">
-                                <h3 className="footer-header">My Account</h3>
+                                <h3 className="footer-header">{i18n.value.MY_ACCOUNT}</h3>
                                 <ul className="list-links">
-                                    <li><a href=".">My Account</a></li>
-                                    <li><a href=".">My Wishlist</a></li>
-                                    <li><a href=".">Compare</a></li>
-                                    <li><a href=".">Checkout</a></li>
-                                    <li><a href=".">Login</a></li>
+                                    <li><a href=".">{i18n.value.MY_ACCOUNT}</a></li>
+                                    <li><a href=".">{i18n.value.MY_WISHLIST}</a></li>
+                                    <li><a href=".">{i18n.value.COMPARE}</a></li>
+                                    <li><a href=".">{i18n.value.CHECKOUT}</a></li>
+                                    <li><a href=".">{i18n.value.LOGIN}</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -61,11 +63,11 @@ const FooterSection = () => {
                         {/* <!-- footer widget --> */}
                         <div className="col-md-3 col-sm-6 col-xs-6">
                             <div className="footer">
-                                <h3 className="footer-header">Customer Service</h3>
+                                <h3 className="footer-header">{i18n.value.CUSTOMER_SERVICE}</h3>
                                 <ul className="list-links">
-                                    <li><a href=".">About Us</a></li>
-                                    <li><a href=".">Shiping & Return</a></li>
-                                    <li><a href=".">Shiping Guide</a></li>
+                                    <li><a href=".">{i18n.value.ABOUT_US}</a></li>
+                                    <li><a href=".">{i18n.value.SHIP_N_RETURN}</a></li>
+                                    <li><a href=".">{i18n.value.SHIP_GUIDE}</a></li>
                                     <li><a href=".">FAQ</a></li>
                                 </ul>
                             </div>
@@ -75,13 +77,13 @@ const FooterSection = () => {
                         {/* <!-- footer subscribe --> */}
                         <div className="col-md-3 col-sm-6 col-xs-6">
                             <div className="footer">
-                                <h3 className="footer-header">Stay Connected</h3>
+                                <h3 className="footer-header">{i18n.value.STAY_CONNECT}</h3>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
                                 <form>
                                     <div className="form-group">
-                                        <input className="input" placeholder="Enter Email Address"/>
+                                        <input className="input" placeholder={i18n.value.EMAIL_PLACEHOLDER}/>
                                     </div>
-                                    <button className="primary-btn">Join Newslatter</button>
+                                    <button className="primary-btn">{i18n.value.JOIN_NEWSLETTER}</button>
                                 </form>
                             </div>
                         </div>

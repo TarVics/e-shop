@@ -1,7 +1,10 @@
 import React from 'react';
+
 import imagesData from "../../../data/db/images.data";
+import {useAppSelector} from "../../../hooks";
 
 const HeaderCart = () => {
+    const {i18n} = useAppSelector(state => state.i18nReducer);
     return (
         <>
             {/* <!-- Cart --> */}
@@ -11,7 +14,7 @@ const HeaderCart = () => {
                         <i className="fa fa-shopping-cart"></i>
                         <span className="qty">3</span>
                     </div>
-                    <strong className="text-uppercase">My Cart:</strong>
+                    <strong className="text-uppercase">{i18n.value.MY_CART}:</strong>
                     <br/>
                     <span>35.20$</span>
                 </div>
@@ -46,8 +49,8 @@ const HeaderCart = () => {
                             </div>
                         </div>
                         <div className="shopping-cart-btns">
-                            <button className="main-btn">View Cart</button>
-                            <button className="primary-btn">Checkout <i
+                            <button className="main-btn">{i18n.value.VIEW_CART}</button>
+                            <button className="primary-btn">{i18n.value.CHECKOUT} <i
                                 className="fa fa-arrow-circle-right"></i>
                             </button>
                         </div>

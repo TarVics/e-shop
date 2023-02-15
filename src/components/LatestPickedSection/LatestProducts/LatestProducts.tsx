@@ -7,6 +7,7 @@ import {refsService, uriService} from "../../../services";
 
 const LatestProducts = () => {
     const navigate = useNavigate();
+    const {i18n} = useAppSelector(state => state.i18nReducer);
     const {latest} = useAppSelector(state => state.summaryReducer);
     const {collections} = useAppSelector(state => state.refsReducer);
     const collection = latest?.collectionColumn ? refsService.getCollectionById(collections, latest?.collectionColumn) : null;
@@ -16,7 +17,7 @@ const LatestProducts = () => {
             {/* <!-- row --> */}
             <div className="row">
                 <div className="col-md-12">
-                    <SectionTitle caption={'Latest Products'}/>
+                    <SectionTitle caption={i18n.value.LATEST_PRODUCTS}/>
                 </div>
 
                 {[0,1,2,3].map(value =>
@@ -36,7 +37,7 @@ const LatestProducts = () => {
                             <h2 className="white-color">{collection.name}</h2>
                             <SectionButton onClick={()=>{
                                 navigate(uriService.uriProductsByCollectionId(collection.id));
-                            }}>Shop Now</SectionButton>
+                            }}>{i18n.value.SHOP_NOW}</SectionButton>
                         </SectionBanner> : null
                     }
                 </div>
