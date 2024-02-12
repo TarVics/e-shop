@@ -1,0 +1,91 @@
+{{#> layouts/main title='Ваше замовлення прийнято' }}
+
+  <p>{{ userName }}, дякуємо за ваше замовлення!</p>
+  <p>Ваше замовлення №{{order.id}} прийнято. Наш менеджер зв'яжеться з Вами найближчим часом для підтвердження замовлення.</p>
+  <p>Також, відстежувати статус замовлення можна в особистому кабінеті.</p>
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+    <tr>
+      <td align="left">
+        <table role="presentation" border="0" cellpadding="0"
+               cellspacing="0">
+          <tbody>
+          <tr>
+            <td>Order No. {{order.id}}</td>
+          </tr>
+          <tr>
+            <td>{{order.createdAt}}</td>
+          </tr>
+          {{#each order.cart.items}}
+            <tr>
+              <td>
+                <hr>
+              </td>
+            </tr>
+            <tr>
+              <td>{{inc @index}}. <a href="{{../frontendURL}}/products/{{this.product.uid}}" target="_blank">{{this.product.name}}</a>
+              </td>
+            </tr>
+            <tr>
+              <td>Ціна: {{this.price}}</td>
+            </tr>
+            <tr>
+              <td>Кількість: {{this.quantity}}</td>
+            </tr>
+          {{/each}}
+          </tbody>
+        </table>
+        <hr/>
+      </td>
+    </tr>
+    <tr>
+      <td align="left">
+        <table role="presentation" border="0" cellpadding="0"
+               cellspacing="0">
+          <tbody>
+          <tr>
+            <td>Загальна сума замовлення:</td>
+            <td>{{order.cart.total}}</td>
+          </tr>
+          <tr>
+            <td>Покупець:</td>
+            <td>{{profile.fullName}}</td>
+          </tr>
+          <tr>
+            <td>Телефон:</td>
+            {{#if profile.tel}}
+              <td>{{profile.tel}}</td>
+            {{else}}
+              <td></td>
+            {{/if}}
+          </tr>
+          <tr>
+            <td>Адреса:</td>
+            <td>{{order.addressFull}}</td>
+          </tr>
+          <tr>
+            <td>Доставка:</td>
+            <td>{{order.shipping.name}}, {{order.shippingPrice}}</td>
+          </tr>
+          <tr>
+            <td>Оплата:</td>
+            <td>{{order.payment.name}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <hr>
+  <p>
+    Цей електронний лист було створено автоматично. Будь ласка, не відповідайте на нього
+  </p>
+  <p>
+    З найліпшими побажаннями,
+  </p>
+  <p>
+    команда {{{appName}}}
+  </p>
+
+{{/layouts/main}}

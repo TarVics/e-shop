@@ -1,0 +1,1 @@
+docker exec -i e-shop-db-1 sh -c "exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"" < %1

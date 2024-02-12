@@ -1,0 +1,32 @@
+{{#> main title='Verify your mail' }}
+  <p>Hi there, {{ userName }}, welcome on our platform!</p>
+  <p>Thank you for signing up for {{{appName}}}, please click below to verify your email:</p>
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0"
+         class="btn btn-primary">
+    <tbody>
+    <tr>
+      <td align="left">
+        <table role="presentation" border="0" cellpadding="0"
+               cellspacing="0">
+          <tbody>
+          <tr>
+            <td> <a href="{{ url }}" target="_blank">VERIFY EMAIL</a> </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <p>
+    This link will expire in {{tokenExpire}} hours. If you did not sign up for a account,
+    you can safely ignore this email.
+  </p>
+  <p>
+    Best,
+  </p>
+  <p>
+    The {{{appName}}} Team
+  </p>
+{{/main}}
+

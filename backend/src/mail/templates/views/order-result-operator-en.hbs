@@ -1,0 +1,89 @@
+{{#> layouts/main title='New order has been arrived' }}
+  <p>New order No. {{order.id}} has been accepted. You need to contact {{ userName }} to confirm the order.</p>
+  <p>You can track the status of the order in user personal account.</p>
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+    <tr>
+      <td align="left">
+        <table role="presentation" border="0" cellpadding="0"
+               cellspacing="0">
+          <tbody>
+          <tr>
+            <td>Order No. {{order.id}}</td>
+          </tr>
+          <tr>
+            <td>{{order.createdAt}}</td>
+          </tr>
+          {{#each order.cart.items}}
+            <tr>
+              <td>
+                <hr>
+              </td>
+            </tr>
+            <tr>
+              <td>{{inc @index}}. <a href="{{../frontendURL}}/products/{{this.product.uid}}" target="_blank">{{this.product.name}}</a>
+              </td>
+            </tr>
+            <tr>
+              <td>Price: {{this.price}}</td>
+            </tr>
+            <tr>
+              <td>Quantity: {{this.quantity}}</td>
+            </tr>
+          {{/each}}
+          </tbody>
+        </table>
+        <hr/>
+      </td>
+    </tr>
+    <tr>
+      <td align="left">
+        <table role="presentation" border="0" cellpadding="0"
+               cellspacing="0">
+          <tbody>
+          <tr>
+            <td>The total amount of the order:</td>
+            <td>{{order.cart.total}}</td>
+          </tr>
+          <tr>
+            <td>Buyer:</td>
+            <td>{{profile.fullName}}</td>
+          </tr>
+          <tr>
+            <td>Phone:</td>
+            {{#if profile.tel}}
+              <td>{{profile.tel}}</td>
+            {{else}}
+              <td>Phone number is empty</td>
+            {{/if}}
+          </tr>
+          <tr>
+            <td>Address:</td>
+            <td>{{order.addressFull}}</td>
+          </tr>
+          <tr>
+            <td>Shipping:</td>
+            <td>{{order.shipping.name}}, {{order.shippingPrice}}</td>
+          </tr>
+          <tr>
+            <td>Payment:</td>
+            <td>{{order.payment.name}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <hr>
+  <p>
+    This letter was generated automatically. Please do not reply to it
+  </p>
+  <p>
+    Best,
+  </p>
+  <p>
+    The {{{appName}}} Team
+  </p>
+
+{{/layouts/main}}

@@ -1,0 +1,13 @@
+diff --git a/node_modules/@nestjs-modules/mailer/dist/adapters/handlebars.adapter.js b/node_modules/@nestjs-modules/mailer/dist/adapters/handlebars.adapter.js
+index 0aa5acb..4085ccb 100644
+--- a/node_modules/@nestjs-modules/mailer/dist/adapters/handlebars.adapter.js
++++ b/node_modules/@nestjs-modules/mailer/dist/adapters/handlebars.adapter.js
+@@ -30,7 +30,7 @@ class HandlebarsAdapter {
+                 ? path.dirname(template)
+                 : path.join(templateBaseDir, path.dirname(template));
+             const templatePath = path.join(templateDir, templateName + templateExt);
+-            templateName = path.relative(templateBaseDir, templatePath).replace(templateExt, '');
++            templateName = path.relative(templateBaseDir, templatePath).replace(templateExt, '').replace(/\\/g, '/');
+             if (!this.precompiledTemplates[templateName]) {
+                 try {
+                     const template = fs.readFileSync(templatePath, 'utf-8');
