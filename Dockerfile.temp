@@ -1,0 +1,373 @@
+# 🚧 Base stage
+# ---------------------------------------
+FROM node:18-alpine AS base
+LABEL authors="TarVic"
+
+# This get shared across later stages
+WORKDIR /app
+
+RUN chown node:node /app
+
+ENV PATH /app/node_modules/.bin:$PATH
+
+# 🏡 Build stage
+# ---------------------------------------
+FROM base AS build
+
+# Installing dependencies first can save time on rebuilds
+# We do need the full (dev) dependencies here
+
+#COPY --chown=node:node package*.json ./
+#RUN npm ci --only=production && \
+#    npm cache clean --force
+
+COPY --chown=node:node package.json yarn.lock ./
+#RUN yarn --frozen-lockfile && \
+#    yarn cache clean
+RUN yarn --frozen-lockfile
+
+# Then copy in the actual sources we need and build
+COPY tsconfig.json ./
+COPY --chown=node:node src/ ./src/
+COPY --chown=node:node patches/ ./patches/
+RUN yarn build
+
+#COPY --chown=node:node . .
+#
+#RUN chmod +x /app/wait-for-it.sh
+#RUN chmod +x /app/docker-entrypoint.sh
+
+# 🏃‍♂️ Runtime stage
+# ---------------------------------------
+FROM base AS runtime
+# This _only_ builds a runtime node_modules tree.
+# We won't need the package.json to actually run the application.
+# If you needed developer-oriented tools to do this install they'd
+# be isolated to this stage.
+COPY package.json yarn.lock ./
+RUN yarn install --production
+
+# 🔧 Test stage
+# ---------------------------------------
+FROM build AS test
+
+#COPY --chown=node:node --from=build /app/node_modules /app/node_modules
+
+RUN yarn test && yarn lint
+
+
+# 🧑‍💻 Development stage
+# ---------------------------------------
+FROM base AS development
+
+#COPY --chown=node:node ./package*.json ./
+#RUN npm ci
+
+## Copy source code into app folder
+#COPY --chown=node:node . .
+#
+## Install dependencies
+#RUN yarn --frozen-lockfile
+
+COPY --chown=node:node package.json yarn.lock ./
+RUN yarn --frozen-lockfile
+
+COPY --chown=node:node . .
+
+RUN apk add bash
+RUN chmod +x /app/wait-for-it.sh
+
+RUN chmod +x /app/docker-entrypoint.sh
+
+# Set Docker as non-root user
+USER node
+
+ENV NODE_ENV=development
+
+CMD ["./docker-entrypoint.sh", "dev"]
+
+# 🚗 Production stage
+# ---------------------------------------
+FROM build AS production
+
+ENV NODE_ENV=production
+
+# Set Docker as non-root user
+USER node
+
+CMD ["./docker-entrypoint.sh", "prod"]
+
+
+# 🚀 Release stage
+# ---------------------------------------
+FROM base AS release
+
+ENV NODE_ENV=production
+
+RUN apk add bash
+
+COPY --chown=node:node --from=runtime /app/node_modules ./node_modules/
+COPY --chown=node:node --from=build /app/dist ./dist/
+
+COPY --chown=node:node ./files ./files/
+COPY --chown=node:node ./wait-for-it.sh ./
+
+RUN chmod +x /app/wait-for-it.sh
+
+EXPOSE 3000
+
+# Set Docker as non-root user
+USER node
+
+CMD ./wait-for-it.sh db:3306 -- node dist/main.js
+
+###############################################################################
+###############################################################################
+
+##
+## 🧑‍💻 Development
+##
+#FROM node:18-alpine as dev
+## add the missing shared libraries from alpine base image
+##RUN apk add --no-cache libc6-compat
+## Create app folder
+#WORKDIR /app
+#
+## Set to dev environment
+#ENV NODE_ENV dev
+#
+## Create non-root user for Docker
+##RUN addgroup --system --gid 1001 node
+##RUN adduser --system --uid 1001 node
+#
+## Copy source code into app folder
+#COPY --chown=node:node . .
+#
+## Install dependencies
+#RUN yarn --frozen-lockfile
+#
+## Set Docker as a non-root user
+#USER node
+#
+##
+## 🏡 Production Build
+##
+#FROM node:18-alpine as build
+#
+#WORKDIR /app
+#RUN apk add --no-cache libc6-compat
+#
+## Set to production environment
+#ENV NODE_ENV production
+#
+## Re-create non-root user for Docker
+##RUN addgroup --system --gid 1001 node
+##RUN adduser --system --uid 1001 node
+#
+## In order to run `yarn build` we need access to the Nest CLI.
+## Nest CLI is a dev dependency.
+#COPY --chown=node:node --from=dev /app/node_modules ./node_modules
+## Copy source code
+#COPY --chown=node:node . .
+#
+## Generate the production build. The build script runs "nest build" to compile the application.
+#RUN yarn build
+#
+## Install only the production dependencies and clean cache to optimize image size.
+#RUN yarn --frozen-lockfile --production && yarn cache clean
+#
+## Set Docker as a non-root user
+#USER node
+#
+##
+## 🚀 Production Server
+##
+#FROM node:18-alpine as prod
+#
+#WORKDIR /app
+#RUN apk add --no-cache libc6-compat
+#
+## Set to production environment
+#ENV NODE_ENV production
+#
+## Re-create non-root user for Docker
+##RUN addgroup --system --gid 1001 node
+##RUN adduser --system --uid 1001 node
+#
+## Copy only the necessary files
+#COPY --chown=node:node --from=build /app/dist dist
+#COPY --chown=node:node --from=build /app/node_modules node_modules
+#
+## Set Docker as non-root user
+#USER node
+#
+#CMD ["node", "dist/main.js"]
+#
+###############################################################################
+###############################################################################
+
+#FROM node:18-alpine AS build
+#WORKDIR /usr/src/app
+## Installing dependencies first can save time on rebuilds
+## We do need the full (dev) dependencies here
+#COPY package.json yarn.lock ./
+#RUN yarn install
+## Then copy in the actual sources we need and build
+#COPY tsconfig.json ./
+#COPY src/ ./src/
+#RUN yarn build
+#
+#FROM node:18-alpine AS deps
+#WORKDIR /usr/src/app
+## This _only_ builds a runtime node_modules tree.
+## We won't need the package.json to actually run the application.
+## If you needed developer-oriented tools to do this install they'd
+## be isolated to this stage.
+#COPY package.json yarn.lock ./
+#RUN yarn install --production
+#
+#FROM node:18-alpine
+#WORKDIR /usr/src/app
+#COPY --from=deps /usr/src/app/node_modules ./node_modules/
+#COPY --from=build /usr/src/app/dist ./dist/
+#EXPOSE 3000
+#
+#CMD ["node", "dist/index.js"]
+
+
+# 🚧 Base stage
+# ---------------------------------------
+FROM node:18-alpine AS base
+LABEL authors="TarVic"
+
+ENV PATH /app/node_modules/.bin:$PATH
+
+# This get shared across later stages
+WORKDIR /app
+
+RUN chown node:node /app
+
+# Needed for wait-for-it.sh
+RUN apk add bash
+
+# Set executable for wait-for-it.sh
+#RUN chmod +x ./wait-for-it.sh
+
+# 🏡 Build stage
+# ---------------------------------------
+FROM base AS build
+
+##COPY --chown=node:node files ./files/
+#COPY --chown=node:node wait-for-it.sh ./
+#
+## Needed for wait-for-it.sh
+#RUN apk add bash
+#
+## Set executable for wait-for-it.sh
+#RUN chmod +x /app/wait-for-it.sh
+
+
+# Installing dependencies first can save time on rebuilds
+# We do need the full (dev) dependencies here
+
+#COPY --chown=node:node package*.json ./
+#RUN npm ci --only=production && \
+#    npm cache clean --force
+
+#COPY --chown=node:node package.json yarn.lock ./
+#COPY --chown=node:node package.json ./
+
+RUN yarn --frozen-lockfile && \
+    yarn cache clean
+#RUN yarn --frozen-lockfile
+#RUN yarn install && yarn cache clean
+#RUN yarn install
+
+#RUN yarn add glob rimraf
+#RUN yarn global add typeorm ts-node@^10.9.1
+#RUN yarn cache clean
+
+# Then copy in the actual sources we need and build
+#COPY --chown=node:node . .
+#COPY --chown=node:node src/ ./src/
+#COPY --chown=node:node tsconfig*.json nest-cli.json ./
+
+RUN yarn build
+
+# 🏃‍♂️ Runtime stage
+# ---------------------------------------
+FROM base AS runtime
+# This _only_ builds a runtime node_modules tree.
+# We won't need the package.json to actually run the application.
+# If you needed developer-oriented tools to do this install they'd
+# be isolated to this stage.
+#COPY --chown=node:node package.json ./
+RUN yarn install --production && yarn cache clean
+
+# 🔧 Test stage
+# ---------------------------------------
+FROM build AS test
+
+RUN yarn test && yarn lint
+
+# 📢 Callable stage
+# ---------------------------------------
+FROM base AS callable
+
+#COPY --chown=node:node files ./files/
+#COPY --chown=node:node wait-for-it.sh ./
+
+# Needed for wait-for-it.sh
+RUN apk add bash
+
+# Set executable for wait-for-it.sh
+#RUN chmod +x /app/wait-for-it.sh
+#RUN chmod +x /app/wait-for-it.sh
+
+# 🧑‍💻 Development stage
+# ---------------------------------------
+FROM base AS development
+
+# Set to development environment
+ENV NODE_ENV=development
+
+#COPY --chown=node:node --from=build /app/node_modules ./node_modules
+#COPY --chown=node:node --from=build /app/dist ./dist
+
+#COPY --from=build /app/node_modules ./node_modules
+#COPY --from=build /app/dist ./dist
+#
+#COPY tsconfig.json nest-cli.json ".env.${NODE_ENV}.local" ./
+
+# Port exposing declaration
+EXPOSE 3000
+
+# Set Docker as non-root user
+USER node
+
+# Entrypoint
+#CMD ./wait-for-it.sh db:3306 && \
+#    typeorm migration:run -d ./dist/ormconfig && \
+#    nest start --watch
+
+# 🚀 Production stage
+# ---------------------------------------
+FROM base AS production
+
+# Set to production environment
+ENV NODE_ENV=production
+
+#COPY --chown=node:node --from=build /app/dist ./dist/
+#COPY --chown=node:node --from=runtime /app/node_modules ./node_modules/
+RUN yarn install --production --frozen-lockfile && yarn cache clean
+
+# Port exposing declaration
+EXPOSE 3000
+
+# Set Docker as non-root user
+USER node
+
+CMD ./wait-for-it.sh db:3306 && \
+    typeorm migration:run -d ./dist/ormconfig.js && \
+    node ./dist/main.js
+
