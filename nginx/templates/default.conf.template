@@ -1,0 +1,43 @@
+server {
+    listen ${NGINX_PORT};
+    server_name _;
+    charset utf-8;
+    client_max_body_size 50M;
+    index index.html;
+    root /usr/share/nginx/html;
+
+    location ~* \.(eot|otf|ttf|woff|woff2)$ {
+        add_header Access-Control-Allow-Origin *;
+        add_header Access-Control-Allow-Headers Content-Type;
+    }
+
+    location / {
+        try_files $uri$args $uri$args/ /index.html;
+
+    }
+
+    location /api/ {
+        proxy_pass http://api:${BACKEND_PORT}/;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+
+        # proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Scheme $scheme;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+proxy_redirect off;
+proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_pass_header Access-Control-Allow-Origin;
+proxy_pass_header Access-Control-Allow-Methods;
+proxy_pass_header Access-Control-Allow-Headers;
+proxy_pass_header Authorization;
+
+        proxy_http_version 1.1;
+        proxy_next_upstream error timeout http_502 http_503 http_504;
+    }
+}
+
+

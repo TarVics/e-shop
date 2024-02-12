@@ -1,0 +1,71 @@
+version: "3.9"
+
+services:
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx
+    environment:
+      - BACKEND_PORT=${BACKEND_PORT}
+      - NGINX_PORT=${NGINX_PORT}
+    volumes:
+      - ./nginx/templates:/etc/nginx/templates
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./client:/usr/share/nginx/html
+    ports:
+      - 80:${NGINX_PORT}
+    depends_on:
+      - api
+    networks:
+      - nest-js-network
+
+  db:
+    container_name: mysql
+    image: mysql:8
+    env_file:
+      - ./backend/.env.${NODE_ENV}.local
+    environment:
+      - MYSQL_ROOT_PASSWORD=superpassword
+    volumes:
+      - ./mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: always
+    networks:
+      - nest-js-network
+
+  api:
+    container_name: e-shop-api
+    image: e-shop-api-${NODE_ENV}
+    env_file:
+      - ./backend/.env.${NODE_ENV}.local
+    environment:
+      - NODE_ENV:${NODE_ENV}
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      # ✨ Target the development stage
+      target: ${NODE_ENV}
+    volumes:
+      # Mount host directory to docker container to support watch mode
+      - ./backend/src:/app/src
+      - ./backend/files:/app/files
+      # This ensures that the NestJS container manages the node_modules folder
+      # rather than synchronizes it with the host machine
+      #- /app/node_modules
+    ports:
+      - "5000:5000"
+    networks:
+      - nest-js-network
+    restart: unless-stopped
+    #    command: npx nest start --watch
+    #    command: sh -c "./wait-for-it.sh db:3306 -- npm run start:${NODE_ENV}"
+    #    command: sh -c "./wait-for-it.sh db:3306 -- npx nest start --watch"
+    #    entrypoint: ["npx", "nest", "start", "--watch"]
+    command: ["./docker-entrypoint.sh"]
+
+networks:
+
+  nest-js-network:
+    driver: "bridge"
+

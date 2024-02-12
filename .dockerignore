@@ -1,0 +1,13 @@
+**/logs
+#**/node_modules/
+**/*.old
+**/*.temp
+**/test
+.dockerignore
+.env.*.local-example
+.eslintrc.js
+.gitignore
+.prettierrc
+.git
+Dockerfile*
+npm-debug.log
